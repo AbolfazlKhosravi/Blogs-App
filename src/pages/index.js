@@ -110,7 +110,7 @@ export default function Home() {
               </li>
             </ul>
           </div>
-          <div className=" mb-6 row-span-2 col-span-12 md:row-span-1  md:col-span-8 lg:col-span-9 grid grid-cols-6 gap-8">
+          <div className=" mb-6 row-span-2 col-span-12 md:row-span-1  md:col-span-8 lg:col-span-9 grid grid-cols-6 gap-8 md:gap-4 xl:gap-8">
             {[
               "nextjs.png",
               "nodejs.jpg",
@@ -153,7 +153,7 @@ export default function Home() {
                         </div>
                         <span className="bg-blue-200 text-blue-500 font-medium px-3 rounded-lg  duration-300 transition-all hover:text-white hover:bg-blue-500 cursor-pointer">ریکت</span>
                       </div>
-                      <div className="flex items-center w-full justify-between mt-3 ">
+                      <div className="flex items-center w-full justify-between mt-3 flex-wrap gap-y-2">
                         <div className="flex items-center gap-x-2">
                           <div className="flex items-center  px-1 bg-slate-100 rounded-lg">
                             <ChatBubbleBottomCenterIcon className="w-5 h-5 text-slate-600" />
