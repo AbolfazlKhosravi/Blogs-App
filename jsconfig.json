@@ -11,7 +11,7 @@
       "@utils/*": ["src/utils/*"],
       "@pages/*": ["src/pages/*"],
       "@api/*": ["src/pages/api/*"],
-      "@styles/*": ["src/styles/*"],
+      "@styles/*": ["styles/*"],
     }
   }
 }
