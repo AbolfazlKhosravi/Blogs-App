@@ -3,7 +3,7 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { animateScroll as scroll } from "react-scroll";
 const CategoryDesktop = ({ postCategories, route }) => {
-  const [isShowe, setIsShow] = useState(false);
+  const [isShowe, setIsShow] = useState(true);
   return (
     <section className="flex flex-col justify-start items-start rounded-xl overflow-hidden">
       <div
@@ -29,7 +29,7 @@ const CategoryDesktop = ({ postCategories, route }) => {
           className={`p-4 xl:text-lg  rounded-lg w-full ${
             route
               ? "text-slate-700  hover:bg-blue-50"
-              : "bg-blue-500 text-white"
+              : "bg-blue-500 rounded-r-full text-white"
           }`}
           href="/blogs"
         >
@@ -44,7 +44,7 @@ const CategoryDesktop = ({ postCategories, route }) => {
               key={category._id}
               className={`p-4 xl:text-lg   rounded-lg w-full ${
                 route === category.englishTitle
-                  ? "bg-blue-500 text-white"
+                  ? "bg-blue-500 rounded-r-full text-white"
                   : "text-slate-700  hover:bg-blue-50"
               }`}
               href={`/blogs/${category.englishTitle}`}
