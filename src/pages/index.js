@@ -11,8 +11,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { animateScroll as scroll } from "react-scroll";
 
-export default function Home({ data }) {
-  const categories = data.categories;
+export default function Home({ blogData ,postCategories }) {
   const [isShowe, setIsShow] = useState(false);
   return (
     <Layout>
@@ -43,17 +42,16 @@ export default function Home({ data }) {
               >
                 <Link
                   className="p-4 xl:text-lg text-slate-700 hover:bg-blue-50 rounded-lg w-full"
-                  href="/"
+                  href="/blogs"
                 >
                   همه پست ها
                 </Link>
-                {categories.map((category) => {
-                  // console.log(categories);
+                {postCategories.map((category) => {
                   return (
                     <Link
                       key={category._id}
                       className="p-4 xl:text-lg text-slate-700 hover:bg-blue-50 rounded-lg w-full"
-                      href={`http://localhost:3000/?categoryId=${category._id}`}
+                      href={`/blogs/${category.englishTitle}`}
                     >
                       {category.title}
                     </Link>
@@ -100,25 +98,25 @@ export default function Home({ data }) {
             </ul>
           </div>
           <div className=" mb-6 row-span-2 col-span-12 md:row-span-1  md:col-span-8 lg:col-span-9 grid grid-rows-[minmax(300px,_1fr)_145px]">
-          <PostList  blogsData={data.blogs}/>
+            <PostList blogsData={blogData} />
             <div className="row-span-1 flex items-center justify-center ">
               <div className="overflow-hidden min-w-[15rem]  rounded-full max-w-screen-lg bg-white shadow-sm border border-slate-100 flex items-center justify-between flex-wrap">
                 <Link
                   onClick={(e) => {
-                    if (data.blogs.hasPrevPage) {
+                    if (blogData.hasPrevPage) {
                       scroll.scrollToTop();
                     } else {
                       e.preventDefault();
                     }
                   }}
                   className={`px-2 py-3  flex items-center justify-between text-slate-500 text-sm ${
-                    data.blogs.hasPrevPage
+                    blogData.hasPrevPage
                       ? "hover:bg-blue-500 hover:text-white "
                       : "cursor-not-allowed opacity-50"
                   } `}
                   href={
-                    data.blogs.hasPrevPage
-                      ? `http://localhost:3000/?page=${data.blogs.prevPage}`
+                    blogData.hasPrevPage
+                      ? `http://localhost:3000/?page=${blogData.prevPage}`
                       : "/"
                   }
                 >
@@ -127,14 +125,14 @@ export default function Home({ data }) {
                   <p>قبلی</p>
                 </Link>
                 <div className="flex items-center justify-between gap-x-3">
-                  {Array(data.blogs.totalPages)
+                  {Array(blogData.totalPages)
                     .fill(0)
                     .map((_, index) => {
                       return (
                         <Link
                           onClick={() => scroll.scrollToTop()}
                           className={` text-slate-500 w-9 h-9 flex items-center justify-center  rounded-full ${
-                            data.blogs.page === index + 1
+                            blogData.page === index + 1
                               ? "bg-blue-500 text-white"
                               : "hover:bg-blue-300 hover:text-white"
                           } `}
@@ -148,20 +146,20 @@ export default function Home({ data }) {
                 </div>
                 <Link
                   onClick={(e) => {
-                    if (data.blogs.hasNextPage) {
+                    if (blogData.hasNextPage) {
                       scroll.scrollToTop();
                     } else {
                       e.preventDefault();
                     }
                   }}
                   className={`px-2 py-3  flex items-center justify-between text-slate-500 text-sm ${
-                    data.blogs.hasNextPage
+                    blogData.hasNextPage
                       ? "hover:bg-blue-500 hover:text-white "
                       : "cursor-not-allowed opacity-50"
                   } `}
                   href={
-                    data.blogs.hasNextPage
-                      ? `http://localhost:3000/?page=${data.blogs.nextPage}`
+                    blogData.hasNextPage
+                      ? `http://localhost:3000/?page=${blogData.nextPage}`
                       : "/"
                   }
                 >
@@ -177,20 +175,19 @@ export default function Home({ data }) {
 }
 export async function getServerSideProps(context) {
   const { query } = context;
-  const blogs = await axios.get(
-    query.page 
+  const {data:result} = await axios.get(
+    query.page
       ? `http://localhost:5000/api/posts?page=${query.page}`
-      : query.categoryId  ?`http://localhost:5000/api/posts?page=${query.page}&categoryId=${query.categoryId}` :`http://localhost:5000/api/posts`
+      : `http://localhost:5000/api/posts`
   );
-  const categories = await axios.get(
+  const {data :postCategories} = await axios.get(
     " http://localhost:5000/api/post-category"
   );
+  const {data}=result
   return {
     props: {
-      data: {
-        blogs: blogs.data.data,
-        categories: categories.data.data,
-      },
+      blogData:data,
+      postCategories: postCategories.data
     },
   };
 }
