@@ -11,7 +11,6 @@ import { animateScroll as scroll } from "react-scroll";
 
 export default function Home({ blogData, postCategories }) {
   const router=useRouter()
-  console.log(router.query.categorySlug);
   return (
     <Layout>
       <section className="h-full w-full px-3 xl:px-6 ">
@@ -21,10 +20,10 @@ export default function Home({ blogData, postCategories }) {
         <section className="grid grid-rows-[60px_minmax(300px,_1fr)] xl:grid-rows-[68px_minmax(300px,_1fr)] grid-cols-12 gap-4 xl:gap-10 w-full mt-2 ">
           {/* category desktop */}
           <div className="  hidden md:flex md:flex-col md:row-span-2 md:col-span-4 lg:col-span-3">
-            <CategoryDesktop postCategories={postCategories} />
+            <CategoryDesktop route={router.query.categorySlug} postCategories={postCategories} />
           </div>
           <SortBar />
-          <CategoryMobile postCategories={postCategories} />
+          <CategoryMobile route={router.query.categorySlug} postCategories={postCategories} />
           {/* blogs section*/}
           <div className=" mb-6 row-span-1 col-span-12 md:row-span-1  md:col-span-8 lg:col-span-9 grid grid-rows-[minmax(300px,_1fr)_145px]">
             <PostList blogsData={blogData} />

@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-const CategoryDesktop = ({postCategories}) => {
-    const [isShowe, setIsShow] = useState(false);
+import { animateScroll as scroll } from "react-scroll";
+const CategoryDesktop = ({ postCategories, route }) => {
+  const [isShowe, setIsShow] = useState(false);
   return (
     <section className="flex flex-col justify-start items-start rounded-xl overflow-hidden">
       <div
@@ -22,7 +23,14 @@ const CategoryDesktop = ({postCategories}) => {
         }`}
       >
         <Link
-          className="p-4 xl:text-lg text-slate-700 hover:bg-blue-50 rounded-lg w-full"
+          onClick={() => {
+            scroll.scrollToTop();
+          }}
+          className={`p-4 xl:text-lg  rounded-lg w-full ${
+            route
+              ? "text-slate-700  hover:bg-blue-50"
+              : "bg-blue-500 text-white"
+          }`}
           href="/blogs"
         >
           همه پست ها
@@ -30,8 +38,15 @@ const CategoryDesktop = ({postCategories}) => {
         {postCategories.map((category) => {
           return (
             <Link
+              onClick={() => {
+                scroll.scrollToTop();
+              }}
               key={category._id}
-              className="p-4 xl:text-lg text-slate-700 hover:bg-blue-50 rounded-lg w-full"
+              className={`p-4 xl:text-lg   rounded-lg w-full ${
+                route === category.englishTitle
+                  ? "bg-blue-500 text-white"
+                  : "text-slate-700  hover:bg-blue-50"
+              }`}
               href={`/blogs/${category.englishTitle}`}
             >
               {category.title}
