@@ -1,0 +1,36 @@
+import { UserCircleIcon } from "@heroicons/react/24/outline";
+import CommentForm from "./commentForm";
+import { useState } from "react";
+import toLocalDate from "@utils/toLocalDate";
+import Link from "next/link";
+
+const SingleComments = ({comment,postId}) => {
+    const [onReply, setOnreply] = useState(false);
+    return (
+        <div className="w-full rounded-xl mb-8 overflow-hidden shadow-lg border border-gray-100 bg-white">
+          <div className="flex items-center justify-start bg-gray-50 px-4 py-2">
+            <UserCircleIcon className="w-12 h-12 stroke-gray-400" strokeWidth={1} />
+            <div className="flex flex-col justify-between mr-4">
+              <span className="block text-sm text-gray-600">{comment.writer?.name}</span>
+              <span className="block text-xs text-gray-500 mt-2 dark:text-slate-500">
+                {toLocalDate(comment.createdAt)}
+              </span>
+            </div>
+          </div>
+          <div className="px-4 pb-4">
+            <div className="mt-4 leading-10 text-slate-600"> {comment.responseTo&&<Link className="text-blue-500 font-bold text-xs " href="#">@{comment.responseTo?.writer.name}</Link>} {comment.content}</div>
+            <button
+              className="text-sm p-4 cursor-pointer text-blue-600"
+              onClick={() => setOnreply(!onReply)}
+            >
+              {onReply ? "بیخیال" : "پاسخ به"}
+            </button>
+              <div className={`overflow-hidden transition-all duration-300 ${onReply?"h-[18rem]":"h-0  "}`}>
+                <span className="text-gray-500 text-sm">در حال پاسخ به {comment.writer?.name}</span>
+                <CommentForm postId={postId} responseTo={comment._id} setOnreply={setOnreply} />
+              </div>
+          </div>
+        </div>
+      );
+}
+export default SingleComments;

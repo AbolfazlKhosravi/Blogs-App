@@ -32,8 +32,8 @@ export default function Home({ blogData, postCategories }) {
             postCategories={postCategories}
           />
           {/* blogs section*/}
-          <div className=" mb-6 row-span-1 col-span-12 md:row-span-1  md:col-span-8 lg:col-span-9 grid grid-rows-[minmax(300px,_1fr)_145px]">
-            <PostList blogsData={blogData} />
+           {blogData.docs.length?<div className=" mb-6 row-span-1 col-span-12 md:row-span-1  md:col-span-8 lg:col-span-9 grid grid-rows-[minmax(300px,_1fr)_145px]">
+            <PostList blogsData={blogData.docs} />
             <div className="row-span-1 flex items-center justify-center ">
               <div className="overflow-hidden min-w-[15rem]  rounded-full max-w-screen-lg bg-white shadow-sm border border-slate-100 flex items-center justify-between flex-wrap">
                 <Link
@@ -104,7 +104,7 @@ export default function Home({ blogData, postCategories }) {
                 </Link>
               </div>
             </div>
-          </div>
+          </div>:<h2>پستی پیدا نشد</h2>}
         </section>
       </section>
     </Layout>

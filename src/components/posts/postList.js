@@ -1,18 +1,16 @@
-import {
-  ClockIcon,
-  HeartIcon,
-  ChatBubbleBottomCenterIcon,
-  BookmarkIcon,
-} from "@heroicons/react/24/outline";
+import { ClockIcon } from "@heroicons/react/24/outline";
+
+import { data } from "autoprefixer";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { animateScroll as scroll } from "react-scroll";
+import PostInteraction from "./postInteraction";
 const PostList = ({ blogsData }) => {
   const [showGoToTheBlog, setShowGoToTheBlog] = useState(null);
   return (
     <div className=" grid grid-cols-6 gap-8 md:gap-4 xl:gap-8 row-span-1">
-      {blogsData.docs.map((blog) => {
+      {blogsData.map((blog) => {
         return (
           <div
             key={blog._id}
@@ -49,9 +47,9 @@ const PostList = ({ blogsData }) => {
                 {blog.title}
               </h3>
               <div className="flex flex-col w-full">
-                <div className="flex items-center justify-between w-full  pt-4">
-                  <div className="flex items-center">
-                    <span className="w-8 h-8 relative">
+                <div className="flex items-center justify-between w-full  pt-4 flex-wrap gap-3 ">
+                  <div className="flex items-center ">
+                    <span className="w-9 h-9 relative">
                       <Image
                         className="rounded-full object-cover cursor-pointer transition-all duration-300 hover:scale-105 "
                         fill
@@ -64,43 +62,27 @@ const PostList = ({ blogsData }) => {
                       {blog.author.name}
                     </p>
                   </div>
-                  <Link
-                    onClick={() => {
-                      scroll.scrollToTop();
-                    }}
-                    href={`/blogs/${blog.category.englishTitle}`}
-                  >
-                    <span className="bg-blue-200 text-blue-500 font-medium px-3 rounded-lg  duration-300 transition-all hover:text-white hover:bg-blue-500 cursor-pointer">
-                      {blog.category.englishTitle}
-                    </span>
-                  </Link>
+                  <div className="flex items-center justify-between flex-wrap gap-2 ">
+                    {blog.category.map((category) => {
+                      return (
+                        <Link
+                          key={category._id}
+                          onClick={() => {
+                            scroll.scrollToTop();
+                          }}
+                          className="duration-300 transition-all hover:scale-105"
+                          href={`/blogs/${category.englishTitle}`}
+                        >
+                          <span className="bg-blue-500 text-white font-medium px-3 py-[.1rem] rounded-lg   cursor-pointer">
+                            {category.englishTitle}
+                          </span>
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
                 <div className="flex items-center w-full justify-between mt-3 flex-wrap gap-y-2">
-                  <div className="flex items-center gap-x-2">
-                    <div className="flex items-center  px-1 bg-slate-100 rounded-lg">
-                      <ChatBubbleBottomCenterIcon className="w-5 h-5 cursor-pointer text-slate-600" />
-                      <p className="text-slate-600 mr-1">
-                        {blog.likesCount.toLocaleString("fa")}
-                      </p>
-                    </div>
-                    <div className="flex items-center px-1 bg-red-100 rounded-lg">
-                      <HeartIcon
-                        className={`w-5 h-5  cursor-pointer text-red-500 ${
-                          blog.isLiked ? "fill-red-500" : ""
-                        }`}
-                      />
-                      <p className="text-red-400 mr-1">
-                        {blog.commentsCount.toLocaleString("fa")}
-                      </p>
-                    </div>
-                    <div className="flex items-center p-1 bg-blue-100 rounded-full cursor-pointer">
-                      <BookmarkIcon
-                        className={`w-5 h-5  text-blue-500 ${
-                          blog.isBookmarked ? "fill-blue-500" : ""
-                        }`}
-                      />
-                    </div>
-                  </div>
+                  <PostInteraction blog={blog} />
                   <div className="flex items-center text-slate-400 font-bold">
                     <ClockIcon className="w-5 h-5" />
                     <p className="text-[.7rem] pr-1">
@@ -111,7 +93,7 @@ const PostList = ({ blogsData }) => {
               </div>
             </div>
             <Link
-              href={`/blogs/blog/${blog.slug}`}
+              href={`/posts/${blog.hashId}/${blog.url_post}`}
               onMouseEnter={() => {
                 setShowGoToTheBlog(blog._id);
               }}
@@ -121,7 +103,7 @@ const PostList = ({ blogsData }) => {
               className={`absolute  w-full ${
                 showGoToTheBlog === blog._id
                   ? "translate-y-0 h-full"
-                  : "translate-y-[22rem] h-full"
+                  : "translate-y-[30rem] h-full"
               } transition-all duration-500 overflow-hidden  flex items-center justify-center`}
             >
               <div className="absolute w-full h-full bg-slate-950 opacity-50 flex "></div>
