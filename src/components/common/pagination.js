@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const Pagination = ({blogData}) => {
     const router = useRouter();
   return (
-    <div className="overflow-hidden min-w-[15rem]  rounded-full max-w-screen-lg bg-white shadow-sm border border-slate-100 flex items-center justify-between flex-wrap">
+    <div dir="ltr" className="overflow-hidden min-w-[15rem]  rounded-full max-w-screen-lg bg-white shadow-sm border border-slate-100 flex items-center justify-between flex-wrap">
       <button
         onClick={() => {
           if (blogData.hasPrevPage) {
@@ -20,7 +20,7 @@ const Pagination = ({blogData}) => {
         } `}
       >
         {" "}
-        <ChevronRightIcon className=" w-4 h-4" />
+        <ChevronLeftIcon className=" w-4 h-4" />
         <p>قبلی</p>
       </button>
       <div className="flex items-center justify-between gap-x-3">
@@ -58,7 +58,7 @@ const Pagination = ({blogData}) => {
             : "cursor-not-allowed opacity-50"
         } `}
       >
-        بعدی <ChevronLeftIcon className=" w-4 h-4" />
+        بعدی  <ChevronRightIcon className=" w-4 h-4" /> 
       </button>
     </div>
   );
