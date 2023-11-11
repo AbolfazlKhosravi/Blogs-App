@@ -9,7 +9,7 @@ const sortOptions = [
   { label: "محبوب ترین", id: "popular" },
   { label: "طولانی  ترین", id: "most" },
 ];
-const SortBar = () => {
+const SortBarMobile = () => {
   const router = useRouter();
   const [sort, setSort] = useState(router.query.sort || "newest");
 
@@ -22,7 +22,7 @@ const SortBar = () => {
     setSort(router.query.sort || "newest");
   }, [router]);
   return (
-    <div className="bg-white rounded-xl px-4 md:text-lg hidden md:flex md:items-center md:justify-start md:row-span-1  md:col-span-8 lg:col-span-9">
+    <div className="row-span-1 col-span-12 flex items-center justify-start overflow-auto md:hidden  whitespace-nowrap pb-4">
       <div className="text-slate-500 flex items-center justify-start">
         <AdjustmentsHorizontalIcon className="w-7 h-7" />
         <p className="text-sm lg:text-lg font-medium text-slate-400 pr-1">
@@ -53,4 +53,4 @@ const SortBar = () => {
   );
 };
 
-export default SortBar;
+export default SortBarMobile;

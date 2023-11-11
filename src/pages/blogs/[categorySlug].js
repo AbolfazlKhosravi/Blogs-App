@@ -9,6 +9,8 @@ import { useRouter } from "next/router";
 import { animateScroll as scroll } from "react-scroll";
 import queryString from "query-string";
 import http from "@services/httpService";
+import SortBarMobile from "@components/posts/sortBarMobile";
+import Pagination from "@components/common/pagination";
 
 export default function Home({ blogData, postCategories }) {
   const router = useRouter();
@@ -18,7 +20,7 @@ export default function Home({ blogData, postCategories }) {
         <h1 className="font-bold  py-4 text-blue-600 text-[1.45rem] md:text-2xl lg:text-3xl lg:py-8 xl:text-[2rem]">
           مقالات
         </h1>
-        <section className="grid grid-rows-[60px_minmax(300px,_1fr)] xl:grid-rows-[68px_minmax(300px,_1fr)] grid-cols-12 gap-4 xl:gap-10 w-full mt-2 ">
+        <section className="grid grid-rows-[60px_60px_minmax(300px,_1fr)] md:grid-rows-[60px_minmax(300px,_1fr)] xl:grid-rows-[68px_minmax(300px,_1fr)] grid-cols-12 gap-4 xl:gap-10 w-full mt-2 ">
           {/* category desktop */}
           <div className="  hidden md:flex md:flex-col md:row-span-2 md:col-span-4 lg:col-span-3">
             <CategoryDesktop
@@ -27,6 +29,7 @@ export default function Home({ blogData, postCategories }) {
             />
           </div>
           <SortBar />
+          <SortBarMobile />
           <CategoryMobile
             route={router.query.categorySlug}
             postCategories={postCategories}
@@ -36,74 +39,7 @@ export default function Home({ blogData, postCategories }) {
             <div className=" mb-6 row-span-1 col-span-12 md:row-span-1  md:col-span-8 lg:col-span-9 grid grid-rows-[minmax(300px,_1fr)_145px]">
               <PostList blogsData={blogData.docs} />
               <div className="row-span-1 flex items-center justify-center ">
-                <div className="overflow-hidden min-w-[15rem]  rounded-full max-w-screen-lg bg-white shadow-sm border border-slate-100 flex items-center justify-between flex-wrap">
-                  <Link
-                    onClick={(e) => {
-                      if (blogData.hasPrevPage) {
-                        scroll.scrollToTop();
-                      } else {
-                        e.preventDefault();
-                      }
-                    }}
-                    className={`px-2 py-3  flex items-center justify-between text-slate-500 text-sm ${
-                      blogData.hasPrevPage
-                        ? "hover:bg-blue-500 hover:text-white "
-                        : "cursor-not-allowed opacity-50"
-                    } `}
-                    href={
-                      blogData.hasPrevPage
-                        ? `http://localhost:3000/blogs/${router.query.categorySlug}?page=${blogData.prevPage}`
-                        : "/"
-                    }
-                  >
-                    {" "}
-                    <ChevronRightIcon className=" w-4 h-4" />
-                    <p>قبلی</p>
-                  </Link>
-                  <div className="flex items-center justify-between gap-x-3">
-                    {Array(blogData.totalPages)
-                      .fill(0)
-                      .map((_, index) => {
-                        return (
-                          <Link
-                            onClick={() => scroll.scrollToTop()}
-                            className={` text-slate-500 w-9 h-9 flex items-center justify-center  rounded-full ${
-                              blogData.page === index + 1
-                                ? "bg-blue-500 text-white"
-                                : "hover:bg-blue-300 hover:text-white"
-                            } `}
-                            key={index}
-                            href={`http://localhost:3000/blogs/${
-                              router.query.categorySlug
-                            }?page=${index + 1}`}
-                          >
-                            <p className="translate-y-[.1rem]">{index + 1}</p>
-                          </Link>
-                        );
-                      })}
-                  </div>
-                  <Link
-                    onClick={(e) => {
-                      if (blogData.hasNextPage) {
-                        scroll.scrollToTop();
-                      } else {
-                        e.preventDefault();
-                      }
-                    }}
-                    className={`px-2 py-3  flex items-center justify-between text-slate-500 text-sm ${
-                      blogData.hasNextPage
-                        ? "hover:bg-blue-500 hover:text-white "
-                        : "cursor-not-allowed opacity-50"
-                    } `}
-                    href={
-                      blogData.hasNextPage
-                        ? `http://localhost:3000/blogs/${router.query.categorySlug}?page=${blogData.nextPage}`
-                        : "/"
-                    }
-                  >
-                    بعدی <ChevronLeftIcon className=" w-4 h-4" />
-                  </Link>
-                </div>
+                <Pagination blogData={blogData} />
               </div>
             </div>
           ) : (
