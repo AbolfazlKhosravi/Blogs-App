@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Input from "@components/formikInput";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { useAuth, useAuthAction } from "@context/authContext";
 

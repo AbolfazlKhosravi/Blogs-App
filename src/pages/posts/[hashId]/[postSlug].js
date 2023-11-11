@@ -1,5 +1,4 @@
 import Layout from "@containers/layout";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -13,6 +12,7 @@ import PostInteraction from "@components/posts/postInteraction";
 import { FaLinkedin, FaTelegram, FaTwitter } from "react-icons/fa6";
 import PostList from "@components/posts/postList";
 import PostComments from "@components/posts/postComments";
+import http from "@services/httpService";
 
 const Blog = ({ blog }) => {
   const [copied, setCopied] = useState(false);
@@ -94,7 +94,7 @@ const Blog = ({ blog }) => {
           <div className="flex items-start justify-between relative md:gap-x-5 lg:gap-x-10">
             <main
               className="prose prose-xl prose-slate prose-h1:text-xl md:prose-h1:text-3xl  prose-h1:font-black prose-h2:text-xl md:prose-h2:text-2xl prose-h2:font-extrabold prose-p:text-base prose-p:leading-8 md:prose-p:text-lg md:prose-p:leading-10
-        prose-img:rounded-xl prose-a:text-blue-500 prose-code:font-bold mb-8 w-auto flex-1 
+        prose-img:rounded-xl prose-img:w-full prose-a:text-blue-500 prose-code:font-bold mb-8 w-auto flex-1 
         "
             >
               <h1>{blog.title}</h1>
@@ -257,10 +257,15 @@ const Blog = ({ blog }) => {
 
 export default Blog;
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps({query,req}) {
   try {
-    const { data: result } = await axios.get(
-      `http://localhost:5000/api/posts/${context.query.hashId}/${context.query.postSlug}`
+    const { data: result } = await http.get(
+      `/posts/${query.hashId}/${query.postSlug}`,{
+        withCredentials:true,
+        headers:{
+          Cookie:req.headers.cookie
+        }
+      }
     );
     const { data } = result;
 

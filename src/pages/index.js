@@ -4,7 +4,6 @@ import Link from "next/link";
 
 const HomePage = () => {
   const user=useAuth()
-  console.log(user);
   return (
     <Layout>
       <main className="flex flex-col items-center justify-center">
