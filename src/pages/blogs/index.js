@@ -116,11 +116,9 @@ export default function Home({ blogData, postCategories }) {
 }
 export async function getServerSideProps(context) {
   const { query, req } = context;
-  console.log(req.headers);
   const { data: result } = await http.get(
     `/posts?${queryString.stringify(query)}`,
     {
-      withCredentials: true,
       headers: {
         Cookie: req.headers.cookie || "",
       },

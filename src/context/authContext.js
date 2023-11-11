@@ -25,9 +25,7 @@ const asyncActionHandlers = {
     (action) => {
       dispatch({ type: "PENDING" });
       http
-        .post("/user/signin", action.payload, {
-          withCredentials: true,
-        })
+        .post("/user/signin", action.payload)
         .then((res) => {
           toast.success("ورود با موفقیت انجام شد");
           dispatch({ type: "SUCCESS", payload: res.data });
@@ -46,9 +44,7 @@ const asyncActionHandlers = {
     (action) => {
       dispatch({ type: "PENDING" });
       http
-        .post("/user/signup", action.payload, {
-          withCredentials: true,
-        })
+        .post("/user/signup", action.payload)
         .then((res) => {
           toast.success(" خوش امدید ");
           dispatch({ type: "SUCCESS", payload: res.data });
@@ -67,9 +63,7 @@ const asyncActionHandlers = {
     (action) => {
       dispatch({ type: "PENDING" });
       http
-        .get("/user/load", {
-          withCredentials: true,
-        })
+        .get("/user/load")
         .then((res) => {
           dispatch({ type: "SUCCESS", payload: res.data });
         })
@@ -84,9 +78,7 @@ const asyncActionHandlers = {
     ({ dispatch }) =>
     (action) => {
       http
-        .get("/user/logout", {
-          withCredentials: true,
-        })
+        .get("/user/logout")
         .then((res) => {
           window.location.href = "/";
         })

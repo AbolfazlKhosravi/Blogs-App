@@ -261,7 +261,6 @@ export async function getServerSideProps({query,req}) {
   try {
     const { data: result } = await http.get(
       `/posts/${query.hashId}/${query.postSlug}`,{
-        withCredentials:true,
         headers:{
           Cookie:req.headers.cookie
         }
