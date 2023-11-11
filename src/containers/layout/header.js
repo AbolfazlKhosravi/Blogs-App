@@ -7,7 +7,7 @@ const Header = () => {
   const dispatch = useAuthAction();
   return (
     <header
-      className={`2xl:container mx-auto   w-full  p-4 min-[550px]:py-6 bg-blue-500 rounded-b-lg `}
+      className={`2xl:container mx-auto sticky top-0 opacity-100 z-50  w-full  p-4 min-[550px]:py-6 bg-slate-100 shadow-sm rounded-b-lg `}
     >
       <div
         className={`flex flex-row  justify-between items-center w-full transition-all duration-500 ${
@@ -16,13 +16,13 @@ const Header = () => {
       >
         <div className="flex items-center justify-start gap-x-4 lg:gap-x-10">
           <Link
-            className="text-white font-medium md:text-lg lg:text-lg"
+            className="text-slate-700 font-medium md:text-lg lg:text-lg"
             href="/"
           >
             خانه
           </Link>
           <Link
-            className="text-white font-medium md:text-lg lg:text-lg"
+            className="text-slate-700 font-medium md:text-lg lg:text-lg"
             href="/blogs"
           >
             بلاگ ها
@@ -32,11 +32,11 @@ const Header = () => {
           {user ? (
             <>
               <Link
-                className="text-white font-medium md:text-lg lg:text-lg"
+                className="text-slate-700 font-medium md:text-lg lg:text-lg"
                 href="#"
               >
                 پروفایل :{" "}
-                <span className="text-xs text-slate-200">{user.name}</span>
+                <span className="text-xs text-slate-600">{user.name}</span>
               </Link>
               <button
                 onClick={() => {
@@ -50,13 +50,13 @@ const Header = () => {
           ) : (
             <>
               <Link
-                className="text-white font-medium md:text-lg lg:text-lg"
+                className="text-slate-700 font-medium md:text-lg lg:text-lg"
                 href="/login"
               >
                 ورود
               </Link>
               <Link
-                className="text-white font-medium md:text-lg lg:text-lg"
+                className="text-slate-700 font-medium md:text-lg lg:text-lg"
                 href="/signUp"
               >
                 ثبت نام

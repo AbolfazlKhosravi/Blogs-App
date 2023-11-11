@@ -147,7 +147,7 @@ const Blog = ({ blog }) => {
 }
 `}</pre>
             </main>
-            <div className="sticky top-8 hidden md:flex flex-col items-start justify-start bg-white p-2  pl-6 rounded-2xl shadow-sm border border-slate-100">
+            <div className="sticky top-24 hidden md:flex flex-col items-start justify-start bg-white p-2  pl-6 rounded-2xl shadow-sm border border-slate-100">
               <div className="flex items-center justify-center  pb-2 mb-2">
                 <div className="flex items-center justify-center ">
                   <Image
