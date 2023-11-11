@@ -14,7 +14,7 @@ const PostList = ({ blogsData }) => {
         return (
           <div
             key={blog._id}
-            className="relative col-span-6 md:col-span-3 lg:col-span-2 bg-white border border-slate-100 shadow-sm rounded-xl overflow-hidden flex flex-col "
+            className="relative max-h-[23rem] col-span-6 md:col-span-3 lg:col-span-2 bg-white border border-slate-100 shadow-sm rounded-xl overflow-hidden flex flex-col "
           >
             <Link
               href={`/posts/${blog.hashId}/${blog.url_post}`}
