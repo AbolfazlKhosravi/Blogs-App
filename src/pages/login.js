@@ -3,12 +3,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FaLock, FaPhoneSquare, FaArrowLeft, FaUserAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Input from "@containers/formikInput";
-import axios from "axios";
+import Input from "@components/formikInput";
 import { useRouter } from "next/router";
+import { useAuth, useAuthAction } from "@context/authContext";
 
 const initialValues = {
   email: "",
@@ -24,21 +23,19 @@ const validationSchema = Yup.object({
 });
 
 const SignUp = () => {
+  const dispatch = useAuthAction();
   const [show, setShow] = useState(false);
   const router = useRouter();
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) router.push("/");
+  }, [user, router]);
+
   const onSubmit = (values) => {
-    axios
-      .post("http://localhost:5000/api/user/signin", values, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        toast.success("ورود با موفقیت انجام شد");
-        router.push("/");
-      })
-      .catch((err) => toast.error(err?.response?.data?.message));
+    dispatch({ type: "SIGNIN", payload: values });
   };
-  useEffect(() => {}, []);
-  useEffect(() => {}, []);
 
   const formik = useFormik({
     initialValues,

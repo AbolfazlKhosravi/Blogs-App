@@ -6,9 +6,10 @@ import { MdEmail } from "react-icons/md";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Input from "@containers/formikInput";
+import Input from "@components/formikInput";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useAuth, useAuthAction } from "@context/authContext";
 
 const initialValues = {
   name: "",
@@ -38,23 +39,21 @@ const validationSchema = Yup.object({
 
 const SignUp = () => {
   const [show, setShow] = useState(false);
+  const dispatch = useAuthAction();
   const router = useRouter();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) router.push("/");
+  }, [user, router]);
 
   const onSubmit = (values) => {
-    const copyValues = { ...values };
-    delete copyValues.confirmPassword;
-    axios
-      .post("http://localhost:5000/api/user/signup", copyValues, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        toast.success(" . خوش امدید ");
-        router.push("/");
-      })
-      .catch((err) => toast.error(err?.response?.data?.message));
+    const { name, phoneNumber, email, password } = values;
+    dispatch({
+      type: "SIGNUP",
+      payload: { name, phoneNumber, email, password },
+    });
   };
-  useEffect(() => {}, []);
-  useEffect(() => {}, []);
 
   const formik = useFormik({
     initialValues,
