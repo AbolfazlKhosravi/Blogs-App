@@ -10,7 +10,6 @@ const PostComments = ({ post }) => {
         نظرات
       </h2>
       {post.comments.map((comment, index) => {
-        console.log(comment);
         return (
           !comment.responseTo?._id &&
           comment.status === 2 && (
