@@ -10,15 +10,15 @@ import { animateScroll as scroll } from "react-scroll";
 import queryString from "query-string";
 import http from "@services/httpService";
 import SortBarMobile from "@components/posts/sortBarMobile";
-import Pagination from "@components/common/pagination";
+import Pagination from "@common/pagination";
 
 export default function Home({ blogData, postCategories }) {
   const router = useRouter();
   return (
     <Layout>
       <section className="h-full w-full px-3 xl:px-6 ">
-        <h1 className="font-bold  py-4 text-blue-600 text-[1.45rem] md:text-2xl lg:text-3xl lg:py-8 xl:text-[2rem]">
-          مقالات
+        <h1 className="font-bold flex items-center gap-4 py-4 text-blue-600 text-[1.45rem] md:text-2xl lg:text-3xl lg:py-8 xl:text-[2rem]">
+          <p>مقالات</p>  {">"} <span className="text-blue-400 text-[1.15rem] md:text-xl lg:text-2xl  xl:text-[1.7rem]">{router.query.categorySlug}</span>
         </h1>
         <section className="grid grid-rows-[60px_60px_minmax(300px,_1fr)] md:grid-rows-[60px_minmax(300px,_1fr)] xl:grid-rows-[68px_minmax(300px,_1fr)] grid-cols-12 gap-4 xl:gap-10 w-full mt-2 ">
           {/* category desktop */}

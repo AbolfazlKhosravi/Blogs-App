@@ -16,7 +16,8 @@ const PostList = ({ blogsData }) => {
             key={blog._id}
             className="relative col-span-6 md:col-span-3 lg:col-span-2 bg-white border border-slate-100 shadow-sm rounded-xl overflow-hidden flex flex-col "
           >
-            <div
+            <Link
+              href={`/posts/${blog.hashId}/${blog.url_post}`}
               onMouseEnter={() => {
                 setShowGoToTheBlog(blog._id);
               }}
@@ -33,7 +34,7 @@ const PostList = ({ blogsData }) => {
                   showGoToTheBlog === blog._id ? "scale-105" : ""
                 }`}
               />
-            </div>
+            </Link>
             <div className="flex flex-col justify-between flex-1 p-3  ">
               <h3
                 onMouseEnter={() => {
