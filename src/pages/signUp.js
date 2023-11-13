@@ -3,12 +3,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FaLock, FaPhoneSquare, FaArrowLeft, FaUserAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Input from "@components/formikInput";
 import { useRouter } from "next/router";
-import { useAuth, useAuthAction } from "@context/authContext";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncSignUpUser } from "src/redux/user/userAction";
 
 const initialValues = {
   name: "",
@@ -38,9 +38,9 @@ const validationSchema = Yup.object({
 
 const SignUp = () => {
   const [show, setShow] = useState(false);
-  const dispatch = useAuthAction();
   const router = useRouter();
-  const { user } = useAuth();
+  const {user}=useSelector((state)=>state.user)
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (user) router.push("/");
@@ -48,10 +48,7 @@ const SignUp = () => {
 
   const onSubmit = (values) => {
     const { name, phoneNumber, email, password } = values;
-    dispatch({
-      type: "SIGNUP",
-      payload: { name, phoneNumber, email, password },
-    });
+    dispatch(asyncSignUpUser({payload: { name, phoneNumber, email, password },}));
   };
 
   const formik = useFormik({

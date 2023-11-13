@@ -1,9 +1,7 @@
 import Layout from "@containers/layout";
-import { useAuth } from "@context/authContext";
 import Link from "next/link";
 
 const HomePage = () => {
-  const user=useAuth()
   return (
     <Layout>
       <main className="flex flex-col items-center justify-center">

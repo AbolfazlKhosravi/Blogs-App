@@ -1,17 +1,18 @@
-import { useAuth, useAuthAction } from "@context/authContext";
 import Link from "next/link";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncLogoutUser } from "src/redux/user/userAction";
 
 const Header = () => {
-  const { user, loading } = useAuth();
-  const dispatch = useAuthAction();
+  const { user, loading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   return (
     <header
       className={`2xl:container mx-auto sticky top-0 opacity-100 z-50  w-full  p-4 min-[550px]:py-6 bg-slate-100 shadow-sm rounded-b-lg `}
     >
       <div
         className={`flex flex-row  justify-between items-center w-full transition-all duration-500 ${
-          loading ? "opacity-0" : "opacity-100"
+           loading ? "opacity-0" : "opacity-100"
         }`}
       >
         <div className="flex items-center justify-start gap-x-4 lg:gap-x-10">
@@ -40,7 +41,7 @@ const Header = () => {
               </Link>
               <button
                 onClick={() => {
-                  dispatch({ type: "SIGNOUT" });
+                  dispatch(asyncLogoutUser());
                 }}
                 className="bg-red-500 text-white font-medium rounded-lg px-2 py-1"
               >

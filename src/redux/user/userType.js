@@ -1,0 +1,3 @@
+export const PENDING_USER="PENDING_USER";
+export const SUCCESS_USER="SUCCESS_USER";
+export const REJECTED_USER="REJECTED_USER";

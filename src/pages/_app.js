@@ -1,14 +1,21 @@
-import AuthProvider from "@context/authContext";
 import "@styles/globals.css";
+import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
+import { useStore } from "react-redux";
+import { wrapper } from "src/redux/store";
+import { asyncLoadUser } from "src/redux/user/userAction";
 
 function MyApp({ Component, pageProps }) {
+  const store = useStore();
+  useEffect(() => {
+    asyncLoadUser(store);
+  }, [store]);
   return (
-    <AuthProvider>
+    <>
       <Component {...pageProps} />
       <Toaster />
-    </AuthProvider>
+    </>
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);
